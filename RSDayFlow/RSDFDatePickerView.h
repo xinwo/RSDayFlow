@@ -86,6 +86,28 @@
  */
 @property (nonatomic, getter = isPagingEnabled) BOOL pagingEnabled;
 
+///------------------
+/// @name Selected Dates
+/// -----------------
+
+/**
+ Selected dates when allowsMultipleSelection is YES
+ 
+ @discussion return nil when allowsMultipleSelection is NO.
+ */
+@property (nonatomic, getter = isAllowsMultipleSelection) BOOL allowsMultipleSelection;
+
+///------------------
+/// @name Selected Dates
+/// -----------------
+
+/**
+ Selected dates when allowsMultipleSelection is YES
+ 
+ @discussion return nil when allowsMultipleSelection is NO.
+ */
+@property (nonatomic, readonly) NSMutableArray *selectedDates;
+
 ///----------------------------
 /// @name Scrolling to the Date
 ///----------------------------
@@ -240,6 +262,19 @@
  @param date The selected date.
  */
 - (void)datePickerView:(RSDFDatePickerView *)view didSelectDate:(NSDate *)date;
+
+/**
+ Tells the delegate that the user did deselect a date.
+ 
+ The date picker view calls this method when the user successfully deselects a date in the date picker view.
+ It does not call this method when you programmatically set the selection.
+ 
+ This method will only be called when allowsMultipleSelection is set to YES
+ 
+ @param view The view whose date was selected.
+ @param date The selected date.
+ */
+- (void)datePickerView:(RSDFDatePickerView *)view didDeselectDate:(NSDate *)date;
 
 @end
 
