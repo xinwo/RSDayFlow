@@ -339,10 +339,8 @@ static NSString * const RSDFDatePickerViewDayCellIdentifier = @"RSDFDatePickerVi
     if (self.isAllowsMultipleSelection) {
         if ([_selectedDates containsObject:date]) {
             [self deSelectCell:date];
-            [_selectedDates removeObject:date];
         } else {
             [self selectCell:date];
-            [_selectedDates addObject:date];
         }
     } else if (![self.selectedDate isEqual:date]) {
         if (self.selectedDate &&
@@ -365,6 +363,10 @@ static NSString * const RSDFDatePickerViewDayCellIdentifier = @"RSDFDatePickerVi
 
 - (void)selectCell:(NSDate *)date
 {
+    if (![_selectedDates containsObject:date]) {
+        [_selectedDates addObject:date];
+    }
+
     NSIndexPath *indexPathForSelectedDate = [self indexPathForDate:date];
     [self.collectionView selectItemAtIndexPath:indexPathForSelectedDate animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     UICollectionViewCell *selectedCell = [self.collectionView cellForItemAtIndexPath:indexPathForSelectedDate];
@@ -375,6 +377,10 @@ static NSString * const RSDFDatePickerViewDayCellIdentifier = @"RSDFDatePickerVi
 
 - (void)deSelectCell:(NSDate *)date
 {
+    if ([_selectedDates containsObject:date]) {
+        [_selectedDates removeObject:date];
+    }
+
     NSIndexPath *previousSelectedCellIndexPath = [self indexPathForDate:date];
     [self.collectionView deselectItemAtIndexPath:previousSelectedCellIndexPath animated:NO];
     UICollectionViewCell *previousSelectedCell = [self.collectionView cellForItemAtIndexPath:previousSelectedCellIndexPath];
